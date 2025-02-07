@@ -1,0 +1,19 @@
+.wrapper {
+  background-color: var(--background-color);
+  color: white;
+  padding: 20px;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+}
+.wrapper__admin {
+  background-color: #1e2328;
+}
+.header {
+  text-align: left;
+}
+.header__title {
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-decoration: none;
+}

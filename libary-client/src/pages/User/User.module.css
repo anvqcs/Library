@@ -1,0 +1,20 @@
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.activeRow {
+  background-color: #e8f5e9; /* Light green for active members */
+}
+
+.table th {
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+.btn {
+  margin-left: 10px;
+}

@@ -1,0 +1,15 @@
+.menu-item {
+  margin: 15px 0;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
+  display: block;
+  transition: background-color 0.3s;
+}
+.active {
+  color: orange;
+}
+.menu-item:hover {
+  background-color: #34495e;
+}

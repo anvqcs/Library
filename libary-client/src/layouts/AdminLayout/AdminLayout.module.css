@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+}
+.sidebar {
+  width: 300px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.title {
+  color: orange;
+}
+h2 {
+  font-weight: bold;
+}
+.content {
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: white;
+}

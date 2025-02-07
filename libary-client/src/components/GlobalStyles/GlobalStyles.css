@@ -1,0 +1,28 @@
+@import 'normalize.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+  --primary: red;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 80%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizespeed;
+  color: var(--text-color);
+  overflow-y: overlay;
+}
+
+:root {
+  --background-color: #2c3e50;
+}

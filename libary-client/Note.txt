@@ -1,0 +1,18 @@
+yarn add customize-cra react-app-rewired --dev
+yarn add --dev babel-plugin-module-resolver
+yarn add classnames
+yarn add react-router-dom
+yarn add prop-types
+yarn add bootstrap
+yarn add react-bootstrap
+yarn add date-fns
+yarn add axios
+yarn add @canvasjs/react-charts
+yarn add @canvasjs/charts
+yarn add jwt-decode
+
+//Shortcut
+Wrap: ctrl shift p
+
+//Extension
+Simple React Snippets
