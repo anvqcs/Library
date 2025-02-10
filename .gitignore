@@ -425,3 +425,4 @@ yarn-error.log*
 
 coverage/
 /Library/Library.WebAPI/appsettings.Development.json
+/Library/Library.WebAPI/appsettings.Development.json
