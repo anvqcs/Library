@@ -7,32 +7,21 @@ import { useEffect, useState } from 'react';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 const cx = classNames.bind(styles);
-const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+
 function Statistic() {
   const [year, setYear] = useState(2025);
   const [dataPoints, setDataPoints] = useState([]);
+  const [totalRentalCost, setTotalRentalCost] = useState(0);
   useEffect(() => {
     const fetchApi = async () => {
       const result = await borrowRecordsService.statistic(year);
-      const formattedData = result.map(record => ({
+      const formattedData = result.borrowRecords.map(record => ({
         label: record.month,
         y: record.totalBorrowed,
         totalCost: record.totalRentalCost,
       }));
       setDataPoints(formattedData);
+      setTotalRentalCost(result.totalRentalCost);
     };
     fetchApi();
   }, [year]);
@@ -76,6 +65,9 @@ function Statistic() {
         </select>
       </div>
       <CanvasJSChart options={options} />
+      <div className={cx('cost')}>
+        <span>Total Rental Cost: {totalRentalCost}</span>
+      </div>
     </div>
   );
 }
