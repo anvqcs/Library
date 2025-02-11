@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 namespace Library.UseCases.Features.BorrowRecords.Queries.StatisticBorrowRecordsByUserPerMonth;
 
 public record StatisticBorrowRecordsByUserPerMonthQuery
-    (int year) : IRequest<List<StatisticBorrowRecordsByUserPerMonthResponse>>;
+    (int year) : IRequest<StatisticBorrowRecordsByUserPerMonthResponse>;
 
 public class StatisticBorrowRecordsByUserPerMonthHandler : IRequestHandler<StatisticBorrowRecordsByUserPerMonthQuery,
-    List<StatisticBorrowRecordsByUserPerMonthResponse>>
+    StatisticBorrowRecordsByUserPerMonthResponse>
 {
     private readonly ILibraryDbContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -22,11 +22,11 @@ public class StatisticBorrowRecordsByUserPerMonthHandler : IRequestHandler<Stati
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<List<StatisticBorrowRecordsByUserPerMonthResponse>> Handle(
+    public async Task<StatisticBorrowRecordsByUserPerMonthResponse> Handle(
         StatisticBorrowRecordsByUserPerMonthQuery request,
         CancellationToken cancellationToken)
     {
-        var result = new List<StatisticBorrowRecordsByUserPerMonthResponse>();
+        var result = new StatisticBorrowRecordsByUserPerMonthResponse();
         var userId = _httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var borrowRecords = await _context.BorrowRecords!
             .Where(br => br.ApplicationUserId == userId && br.BorrowDate.Year == request.year)
@@ -35,7 +35,8 @@ public class StatisticBorrowRecordsByUserPerMonthHandler : IRequestHandler<Stati
         {
             // ReSharper disable once AccessToModifiedClosure
             var records = borrowRecords.Where(br => br.BorrowDate.Month == i);
-            result.Add(new StatisticBorrowRecordsByUserPerMonthResponse
+            result.TotalRentalCost += (double)records.Sum(br => br.RentalCost);
+            result.BorrowRecords.Add(new StatisticBorrowRecordsByUserPerMonth
             {
                 Month = new DateTime(request.year, i, 1).ToString("MMMM"),
                 // ReSharper disable once PossibleMultipleEnumeration
@@ -49,9 +50,15 @@ public class StatisticBorrowRecordsByUserPerMonthHandler : IRequestHandler<Stati
     }
 }
 
-public class StatisticBorrowRecordsByUserPerMonthResponse
+public class StatisticBorrowRecordsByUserPerMonth
 {
     public string Month { get; set; } = string.Empty;
     public int TotalBorrowed { get; set; }
     public double? TotalRentalCost { get; set; } = 0;
+}
+public class StatisticBorrowRecordsByUserPerMonthResponse
+{
+    public List<StatisticBorrowRecordsByUserPerMonth> BorrowRecords { get; set; } =
+        new List<StatisticBorrowRecordsByUserPerMonth>();
+    public double TotalRentalCost { get; set;} = 0;
 }
